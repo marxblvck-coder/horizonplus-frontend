@@ -7,12 +7,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        horizon: {
-          dark: "#1E2A38",
-          blue: "#1B5EAA",
-          gold: "#C9A227",
-        },
-      },
+      "horizon-dark": "#0B1C2D",
+      "horizon-blue": "#1F4FD8",
+      "horizon-gold": "#F2C94C",
+    },
     },
   },
   plugins: [],

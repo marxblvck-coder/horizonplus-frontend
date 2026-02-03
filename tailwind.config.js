@@ -7,9 +7,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-      "horizon-dark": "#0B1C2D",
-      "horizon-blue": "#1F4FD8",
-      "horizon-gold": "#F2C94C",
+      'eliaviv-green': '#0a3d30', // Le vert foncé du logo
+      'eliaviv-gold': '#d4a356',  // L'or du logo
+      'eliaviv-soft': '#6ba292',  // Le vert d'eau des feuilles
+      'eliaviv-light': '#f4f7f6', // Pour les fonds de section
     },
     },
   },

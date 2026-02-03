@@ -6,146 +6,165 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X, Globe } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/app/context/LanguageContext"; 
 
 export default function Navbar() {
+  const { lang, t, switchLanguage } = useLanguage(); 
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
   const pathname = usePathname();
 
   useEffect(() => {
-    // 1. Détection du scroll pour changer le style
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 20);
     };
-
-    // 2. Détection de la section active (pour "Que faisons-nous")
-    const observerOptions = { threshold: 0.6 };
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    }, observerOptions);
-
-    const sections = document.querySelectorAll("section[id]");
-    sections.forEach((section) => observer.observe(section));
-
     window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      sections.forEach((section) => observer.unobserve(section));
-    };
-  }, [pathname]);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navLinks = [
-    { label: "Qui sommes-nous", href: "/about" },
-    { label: "Que faisons-nous", href: "/services", id: "que-faisons-nous" },
-    { label: "Nos moyens d’action", href: "/actions" },
-    { label: "Publications", href: "/publications" },
-    { label: "Contact", href: "/contact" },
+    { label: t.nav.about, href: "/about" },
+    { label: t.nav.services, href: "/services" },
+    { label: t.nav.actions, href: "/actions" },
+    { label: t.nav.publications, href: "/publications" },
+    { label: t.nav.contact, href: "/contact" },
   ];
 
   return (
     <nav 
-      className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${
+      className={`fixed top-0 left-0 w-full z-[100] transition-all duration-700 ${
         isScrolled 
-          ? "bg-white/90 backdrop-blur-xl shadow-lg py-2" 
-          : "bg-horizon-dark/80 backdrop-blur-sm py-4"
+          ? "bg-white/80 backdrop-blur-2xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] py-3" 
+          : "bg-[#05261e]/40 backdrop-blur-sm py-6"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         
-        {/* Logo */}
-        <Link href="/" className="relative z-50 hover:scale-105 transition-transform">
+        {/* LOGO */}
+        <Link href="/" className="relative z-50 transition-all duration-500 hover:opacity-90">
           <Image
             src="/lelogo.jpeg"
-            alt="Horizon Plus"
-            width={isScrolled ? 140 : 160}
-            height={70}
+            alt="Eliaviv Consulting"
+            width={isScrolled ? 130 : 150}
+            height={65}
             priority
-            className="rounded-lg shadow-sm"
+            className={`rounded-xl transition-all duration-500 ${isScrolled ? "shadow-md" : "shadow-2xl border border-white/10"}`}
           />
         </Link>
 
-        {/* Desktop menu */}
-        <div className="hidden md:flex items-center gap-10">
-          <ul className="flex items-center gap-8">
+        {/* DESKTOP NAV */}
+        <div className="hidden lg:flex items-center gap-12">
+          <ul className="flex items-center gap-10">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href || (activeSection === link.id && pathname === "/");
+              const isActive = pathname === link.href;
               return (
-                <li key={link.href} className="relative">
+                <li key={link.href} className="relative group">
                   <Link
                     href={link.href}
-                    className={`text-sm font-bold uppercase tracking-wider transition-colors duration-300 ${
+                    className={`text-[13px] font-bold uppercase tracking-[0.2em] transition-all duration-300 ${
                       isActive 
-                        ? "text-horizon-gold" 
-                        : isScrolled ? "text-horizon-dark hover:text-horizon-blue" : "text-white hover:text-horizon-gold"
+                        ? "text-eliaviv-gold" 
+                        : isScrolled ? "text-eliaviv-green hover:text-eliaviv-gold" : "text-white/90 hover:text-eliaviv-gold"
                     }`}
                   >
                     {link.label}
                   </Link>
+                  {/* Indicateur Premium */}
                   {isActive && (
                     <motion.div 
-                      layoutId="navActive"
-                      className="absolute -bottom-2 left-0 w-full h-0.5 bg-horizon-gold"
+                      layoutId="navBullet"
+                      className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-eliaviv-gold"
                     />
                   )}
+                  <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-0 h-1.5 rounded-full bg-eliaviv-gold/30 group-hover:w-1.5 transition-all duration-300" />
                 </li>
               );
             })}
           </ul>
 
-          {/* Language Switcher */}
-          <div className="flex items-center gap-2 border-l border-gray-300 pl-6 ml-2">
-            <button className="border border-white px-3 py-1 rounded hover:bg-horizon-gold hover:text-black transition">
-
-🇨🇮 FR
-
-</button>
-
-<button className="border border-white px-3 py-1 rounded hover:bg-horizon-gold hover:text-black transition">
-
-🇺🇸 EN
-
-</button> 
+          {/* SÉLECTEUR DE LANGUE PREMIUM */}
+          <div className={`flex items-center gap-1 p-1 rounded-full border transition-all duration-500 ${
+            isScrolled ? "border-gray-200 bg-gray-50" : "border-white/10 bg-white/5"
+          }`}>
+            <button 
+              onClick={() => switchLanguage("fr")}
+              className={`text-[10px] font-black w-8 h-8 rounded-full flex items-center justify-center transition-all ${
+                lang === "fr" 
+                ? "bg-eliaviv-gold text-eliaviv-green shadow-lg" 
+                : isScrolled ? "text-gray-400 hover:text-eliaviv-green" : "text-white/50 hover:text-white"
+              }`}
+            >
+              FR
+            </button>
+            <button 
+              onClick={() => switchLanguage("en")}
+              className={`text-[10px] font-black w-8 h-8 rounded-full flex items-center justify-center transition-all ${
+                lang === "en" 
+                ? "bg-eliaviv-gold text-eliaviv-green shadow-lg" 
+                : isScrolled ? "text-gray-400 hover:text-eliaviv-green" : "text-white/50 hover:text-white"
+              }`}
+            >
+              EN
+            </button> 
           </div>
         </div>
 
-        {/* Mobile button */}
+        {/* MOBILE TOGGLE */}
         <button
-          className={`md:hidden p-2 rounded-xl transition-colors ${isScrolled ? "text-horizon-dark bg-gray-100" : "text-white bg-white/10"}`}
+          className={`lg:hidden w-12 h-12 flex items-center justify-center rounded-2xl transition-all ${
+            isScrolled ? "text-eliaviv-green bg-gray-100" : "text-white bg-white/10"
+          }`}
           onClick={() => setOpen(!open)}
         >
-          {open ? <X size={24} /> : <Menu size={24} />}
+          {open ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* MENU MOBILE PREMIUM */}
       <AnimatePresence>
         {open && (
           <motion.div 
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white overflow-hidden shadow-2xl"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="lg:hidden absolute top-full left-0 w-full bg-white border-t border-gray-100 shadow-2xl overflow-hidden"
           >
-            <ul className="flex flex-col gap-4 px-8 py-8">
-              {navLinks.map((link) => (
-                <li key={link.href}>
+            <ul className="flex flex-col p-8 gap-6">
+              {navLinks.map((link, i) => (
+                <motion.li 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  key={link.href}
+                >
                   <Link
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="text-lg font-bold text-horizon-dark hover:text-horizon-gold block transition-colors"
+                    className="text-2xl font-bold text-eliaviv-green hover:text-eliaviv-gold flex items-center justify-between group"
                   >
                     {link.label}
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-eliaviv-gold">→</span>
                   </Link>
-                </li>
+                </motion.li>
               ))}
-              <div className="flex gap-3 pt-6 border-t border-gray-100">
-                <button className="flex-1 py-3 border border-gray-200 rounded-xl font-bold text-horizon-dark">Français</button>
-                <button className="flex-1 py-3 border border-gray-200 rounded-xl font-bold text-horizon-dark">English</button>
+              
+              <div className="mt-6 pt-8 border-t border-gray-100 flex items-center justify-between">
+                <span className="text-sm font-bold text-gray-400 flex items-center gap-2">
+                  <Globe size={16} /> Language
+                </span>
+                <div className="flex gap-2">
+                  {["fr", "en"].map((l) => (
+                    <button
+                      key={l}
+                      onClick={() => { switchLanguage(l as "fr" | "en"); setOpen(false); }}
+                      className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest ${
+                        lang === l ? "bg-eliaviv-green text-white" : "bg-gray-100 text-gray-500"
+                      }`}
+                    >
+                      {l}
+                    </button>
+                  ))}
+                </div>
               </div>
             </ul>
           </motion.div>

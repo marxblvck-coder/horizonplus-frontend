@@ -1,103 +1,101 @@
 "use client";
-
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/app/context/LanguageContext";
+import Image from "next/image";
 
 export default function Hero() {
+  const { t } = useLanguage();
+  
   return (
-    <section className="relative min-h-screen flex items-center bg-gradient-to-br from-horizon-dark via-[#1a2a44] to-horizon-blue text-white overflow-hidden">
-      
-      {/* Background Decor */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-horizon-gold/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[10%] right-[5%] w-[30%] h-[30%] bg-horizon-blue/20 rounded-full blur-[100px]" />
-        {/* Lignes de structure légères pour le style "Cabinet d'étude" */}
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '100px 100px' }} />
+    <section className="relative min-h-screen flex items-center bg-eliaviv-green text-white overflow-hidden">
+      {/* Éléments de design d'arrière-plan */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-eliaviv-gold/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[10%] left-[-5%] w-[400px] h-[400px] bg-eliaviv-soft/10 rounded-full blur-[100px]" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center pt-20">
         
         <motion.div 
-          initial={{ opacity: 0, x: -50 }}
+          initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="space-y-8"
+          className="space-y-10"
         >
-          {/* Identité Mise en avant */}
-          <div className="space-y-2">
-            <motion.span 
-              initial={{ opacity: 0, y: 20 }}
+          <div className="space-y-4">
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="inline-block px-4 py-1 rounded-full bg-horizon-gold/20 text-horizon-gold text-sm font-bold tracking-[0.3em] uppercase"
+              className="flex items-center gap-3"
             >
-              Horizon Plus
-            </motion.span>
-            <h1 className="text-6xl md:text-8xl font-black leading-tight tracking-tighter">
-              AU-DELÀ DE <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-horizon-gold via-yellow-200 to-white">
-                L'HORIZON
+              <div className="w-12 h-[2px] bg-eliaviv-gold" />
+              <span className="text-eliaviv-gold font-bold tracking-[0.4em] uppercase text-xs">
+                {t.home.hero.badge}
+              </span>
+            </motion.div>
+            
+            <h1 className="text-6xl md:text-7xl font-bold leading-[1.1] tracking-tight">
+              {t.home.hero.title1} <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-eliaviv-gold via-[#f3d39a] to-eliaviv-soft">
+                {t.home.hero.title2}
               </span>
             </h1>
           </div>
 
-          <p className="text-xl md:text-2xl text-gray-300 max-w-xl leading-relaxed font-light italic">
-            "Construire un avenir durable et inclusif par l'expertise et l'innovation."
+          <p className="text-xl md:text-2xl text-eliaviv-light/70 max-w-xl leading-relaxed font-light">
+            "{t.home.hero.quote}"
           </p>
 
-          <div className="flex flex-wrap gap-5 pt-4">
+          <div className="flex flex-wrap gap-6">
             <Link href="/contact">
-              <button className="px-10 py-5 rounded-2xl bg-horizon-gold text-black font-black hover:shadow-[0_20px_40px_rgba(255,184,0,0.3)] transition-all duration-300 hover:scale-105 uppercase tracking-widest text-sm">
-                Nous contacter
+              <button className="px-10 py-5 rounded-full bg-eliaviv-gold text-eliaviv-green font-bold hover:shadow-[0_20px_40px_rgba(212,163,86,0.3)] transition-all duration-300 hover:scale-105 uppercase tracking-widest text-xs">
+                {t.home.hero.btnContact}
               </button>
             </Link>
-
             <Link href="/about">
-              <button className="px-10 py-5 rounded-2xl border-2 border-white/20 backdrop-blur-sm hover:bg-white hover:text-black transition-all duration-300 font-bold uppercase tracking-widest text-sm">
-                Notre Vision
+              <button className="px-10 py-5 rounded-full border border-white/30 backdrop-blur-sm hover:bg-white hover:text-eliaviv-green transition-all duration-300 font-bold uppercase tracking-widest text-xs">
+                {t.home.hero.btnVision}
               </button>
             </Link>
           </div>
         </motion.div>
 
-        {/* Le Cercle de Marque à droite */}
+        {/* Visuel Premium : Le Cercle de Vie Eliaviv */}
         <motion.div 
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="hidden md:flex justify-center relative"
+          transition={{ duration: 1.2 }}
+          className="hidden lg:flex justify-center relative"
         >
-          {/* Effet d'anneau rotatif */}
+          {/* Cercles concentriques animés */}
           <motion.div 
             animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 rounded-full border-2 border-dashed border-white/10"
+            transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+            className="absolute w-[520px] h-[520px] rounded-full border border-white/5 border-dashed"
           />
+          
+          <div className="relative w-[480px] h-[480px] rounded-full bg-gradient-to-b from-white/[0.08] to-transparent backdrop-blur-md border border-white/10 flex items-center justify-center p-12 shadow-2xl">
+            <div className="text-center space-y-8">
+              <div className="relative w-32 h-32 mx-auto">
+                 {/* Ton nouveau logo ici */}
+                 <Image src="/lelogo.jpeg" alt="Eliaviv Logo" fill className="object-contain" />
+              </div>
+              
+              <div className="space-y-4">
+                <h2 className="text-4xl font-bold tracking-tight text-white uppercase italic">{t.home.hero.circleTitle}</h2>
+                <div className="w-12 h-[1px] bg-eliaviv-gold mx-auto" />
+                <p className="text-xs font-bold tracking-[0.5em] uppercase text-eliaviv-gold opacity-80">
+                  {t.home.hero.circleSlogan}
+                </p>
+              </div>
 
-          <motion.div 
-            animate={{ y: [0, -20, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="w-[450px] h-[450px] rounded-full bg-gradient-to-br from-white/10 to-transparent backdrop-blur-xl border border-white/20 flex items-center justify-center text-center p-12 shadow-[0_0_100px_rgba(0,0,0,0.3)]"
-          >
-            <div className="space-y-6">
-               <h2 className="text-5xl font-black tracking-tighter text-white">
-                HORIZON <br /> PLUS
-               </h2>
-               <div className="w-16 h-1 bg-horizon-gold mx-auto"></div>
-               <p className="text-sm font-bold tracking-[0.4em] uppercase text-horizon-gold">
-                Au-delà de l'horizon
-              </p>
-               <p className="text-gray-400 text-sm max-w-[200px] mx-auto font-medium leading-relaxed">
-                Expertise • Durabilité • Impact Social
+              <p className="text-eliaviv-light/50 text-xs max-w-[240px] mx-auto font-medium leading-relaxed tracking-widest">
+                {t.home.hero.circleExpertise}
               </p>
             </div>
-          </motion.div>
+          </div>
         </motion.div>
-      </div>
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] transform rotate-180">
-        <svg className="relative block w-full h-[100px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-          <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#0F172A"></path>
-        </svg>
       </div>
     </section>
   );

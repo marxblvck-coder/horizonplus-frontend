@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/SmoothScroll";
+import { LanguageProvider } from "./context/LanguageContext"; // Import du Provider
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,10 +16,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-
 export const metadata: Metadata = {
-  title: "HorizonPlus",
-  description: "Plateforme HorizonPlus",
+  title: "Eliaviv Consulting",
+  description: "Plateforme Eliaviv Consulting - L'expertise au service de votre renouveau",
 };
 
 export default function RootLayout({
@@ -27,17 +27,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="fr"> 
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <SmoothScroll>
-        <Navbar />
-        <main className="pt-6">
-          {children}
-        </main>
-        <Footer />
-        </SmoothScroll>
+        <LanguageProvider> 
+          <SmoothScroll>
+            <Navbar />
+            <main>
+              {children}
+            </main>
+            <Footer />
+          </SmoothScroll>
+        </LanguageProvider>
       </body>
-
     </html>
   );
 }

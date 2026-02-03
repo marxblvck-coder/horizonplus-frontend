@@ -1,74 +1,81 @@
 "use client";
-
 import { GraduationCap, Briefcase, BarChart3, ClipboardList } from "lucide-react";
 import { motion } from "framer-motion";
-
-const actions = [
-  { title: "Formation", description: "Programmes de formation sur mesure en développement durable, RSE, DRDH, suivi-évaluation et management.", icon: GraduationCap },
-  { title: "Assistance-conseil", description: "Accompagnement stratégique des entreprises et ONG basé sur l’analyse de données et les meilleures pratiques.", icon: Briefcase },
-  { title: "Études & Audit social", description: "Études sectorielles, audits sociaux et monitoring avec des outils innovants et une exigence de qualité.", icon: BarChart3 },
-  { title: "Gestion de projets", description: "Conception, mise en œuvre et suivi-évaluation de projets de développement à fort impact.", icon: ClipboardList },
-];
+import { useLanguage } from "@/app/context/LanguageContext";
+import Link from "next/link";
 
 export default function Actions() {
-  return (
-    <section className="py-28 bg-white relative overflow-hidden">
-      {/* Background Decor - Bulles de couleur subtiles */}
-      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-96 h-96 bg-horizon-blue/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/4 w-[500px] h-[500px] bg-horizon-gold/5 rounded-full blur-3xl" />
+  const { t } = useLanguage();
+  const icons = [GraduationCap, Briefcase, BarChart3, ClipboardList];
 
+  return (
+    <section className="py-32 bg-[#fcfdfc] relative overflow-hidden">
+      {/* Éléments de fond organiques */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-eliaviv-soft/5 rounded-full blur-[120px] -z-10" />
+      
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-6">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-24 gap-10">
           <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="max-w-2xl"
           >
-            <h2 className="text-4xl md:text-5xl font-black text-horizon-dark tracking-tight">
-              Nos champs <br/><span className="text-horizon-blue italic">d'expertise</span>
+            <h2 className="text-5xl md:text-6xl font-bold text-eliaviv-green tracking-tight leading-tight">
+              {t.home.actionsHome.title1} <br/>
+              <span className="text-eliaviv-gold italic font-serif">{t.home.actionsHome.title2}</span>
             </h2>
           </motion.div>
-          <motion.p 
-             initial={{ opacity: 0 }}
-             whileInView={{ opacity: 1 }}
-             className="text-gray-500 max-w-sm border-l-2 border-horizon-gold pl-4 italic"
+          
+          <motion.div 
+             initial={{ opacity: 0, x: 20 }}
+             whileInView={{ opacity: 1, x: 0 }}
+             className="max-w-md"
           >
-            Des solutions innovantes pour un impact social et environnemental durable.
-          </motion.p>
+            <p className="text-gray-600 text-lg border-l-4 border-eliaviv-gold pl-6 py-2 leading-relaxed font-light">
+              {t.home.actionsHome.desc}
+            </p>
+          </motion.div>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {actions.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              whileHover={{ scale: 1.02 }}
-              className="relative group h-full"
-            >
-              {/* Card Background avec effet de glassmorphism au hover */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-50/50 rounded-3xl -z-10 group-hover:to-horizon-blue/5 transition-colors duration-500" />
-              
-              <div className="p-8 h-full border border-gray-100 rounded-3xl group-hover:border-horizon-blue/20 transition-all duration-500 flex flex-col shadow-sm group-hover:shadow-xl">
-                <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-white shadow-lg text-horizon-blue group-hover:bg-horizon-blue group-hover:text-white transition-all duration-500 mb-8">
-                  <item.icon size={28} />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {t.home.actionsHome.items.map((item: any, index: number) => {
+            const Icon = icons[index];
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="group relative h-full"
+              >
+                {/* Carte au design minimaliste et luxueux */}
+                <div className="p-10 h-full bg-white border border-gray-100 rounded-[2.5rem] shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] group-hover:shadow-[0_20px_60px_-10px_rgba(10,61,48,0.15)] group-hover:border-eliaviv-soft/30 transition-all duration-500 flex flex-col relative overflow-hidden">
+                  
+                  {/* Effet de brillance au hover */}
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-eliaviv-gold to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  <div className="w-16 h-16 flex items-center justify-center rounded-2xl bg-eliaviv-green text-eliaviv-gold mb-10 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                    <Icon size={32} strokeWidth={1.5} />
+                  </div>
+                  
+                  <h3 className="text-2xl font-bold text-eliaviv-green mb-5 group-hover:text-eliaviv-gold transition-colors duration-300">
+                    {item.title}
+                  </h3>
+                  
+                  <p className="text-gray-500 text-base leading-relaxed font-light flex-grow">
+                    {item.description}
+                  </p>
+                  <Link href="/services">
+                  <div className="mt-8 flex items-center gap-2 text-eliaviv-green font-bold text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-500">
+                    En savoir plus <span className="text-eliaviv-gold">→</span>
+                  </div>
+                  </Link>
                 </div>
-                
-                <h3 className="text-xl font-bold text-horizon-dark mb-4 group-hover:text-horizon-blue transition-colors">
-                  {item.title}
-                </h3>
-                
-                <p className="text-gray-500 text-sm leading-relaxed flex-grow">
-                  {item.description}
-                </p>
-
-                <div className="mt-6 w-8 h-1 bg-gray-200 group-hover:w-full group-hover:bg-horizon-blue transition-all duration-500" />
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

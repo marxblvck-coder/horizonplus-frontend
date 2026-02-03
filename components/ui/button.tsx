@@ -1,32 +1,36 @@
+"use client";
+
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "inline-flex items-center justify-center gap-3 whitespace-nowrap rounded-2xl text-sm font-bold uppercase tracking-widest transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none active:scale-95 focus-visible:ring-2 focus-visible:ring-eliaviv-gold/50",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-        outline:
-          "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost:
-          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
-        link: "text-primary underline-offset-4 hover:underline",
+        // Le bouton signature Eliaviv (Vert forêt)
+        default: "bg-eliaviv-green text-white shadow-xl shadow-eliaviv-green/20 hover:bg-[#0d4d3d] hover:shadow-eliaviv-green/40 hover:-translate-y-1",
+        
+        // Le bouton Prestige (Or)
+        premium: "bg-eliaviv-gold text-eliaviv-green shadow-lg shadow-eliaviv-gold/20 hover:bg-[#e5b66a] hover:shadow-eliaviv-gold/40 hover:-translate-y-1",
+        
+        // Outline raffiné
+        outline: "border-2 border-eliaviv-green bg-transparent text-eliaviv-green hover:bg-eliaviv-green hover:text-white dark:border-eliaviv-gold dark:text-eliaviv-gold dark:hover:bg-eliaviv-gold dark:hover:text-eliaviv-green",
+        
+        // Ghost discret pour la navigation
+        ghost: "text-eliaviv-green hover:bg-eliaviv-green/5 hover:text-eliaviv-gold dark:text-white/80 dark:hover:bg-white/5",
+        
+        destructive: "bg-red-600 text-white hover:bg-red-700 shadow-sm",
+        secondary: "bg-eliaviv-soft/10 text-eliaviv-green hover:bg-eliaviv-soft/20",
+        link: "text-eliaviv-green underline-offset-8 hover:underline hover:text-eliaviv-gold decoration-eliaviv-gold",
       },
       size: {
-        default: "h-9 px-4 py-2 has-[>svg]:px-3",
-        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
-        icon: "size-9",
-        "icon-sm": "size-8",
-        "icon-lg": "size-10",
+        default: "h-12 px-8 py-3",
+        sm: "h-10 rounded-xl px-4 text-xs",
+        lg: "h-14 rounded-3xl px-10 text-base shadow-2xl",
+        icon: "size-12 rounded-xl",
       },
     },
     defaultVariants: {
